@@ -76,6 +76,16 @@ angular.module('ui.codemirror', [])
               }
             });
           }
+
+          // Watch inc-change and update the editor
+          if (attrs.incChange) {
+            scope.$watch(attrs.incChange, function (newVal, oldVal) {
+              // Skip the initial watch firing
+              if (newVal !== oldVal) {
+                $timeout(function(){codeMirror.replaceRange(newVal.text, newVal.from, newVal.to);});
+              }
+            });
+          }
         };
 
         $timeout(deferCodeMirror);
