@@ -86,6 +86,17 @@ angular.module('ui.codemirror', [])
               }
             });
           }
+          
+          //set up a watch on the options object so that changes can be dynamically applied
+          if (attrs.uiCodemirror) {
+            scope.$watch(attrs.uiCodemirror, function (newVal, oldVal) {
+              for(var optionName in newVal){
+                if(newVal[optionName] !== oldVal[optionName]){
+                  codeMirror.setOption(optionName, newVal[optionName]);
+                }
+              }
+            }, true);
+          }          
         };
 
         $timeout(deferCodeMirror);
